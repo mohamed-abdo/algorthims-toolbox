@@ -1,4 +1,5 @@
 dist
 build
+py-env
 .idea
 __pycache__

@@ -1,31 +1,34 @@
-import sys
-
-
 class MaxPairs:
-    def calc_max_pairs(self, numbers):
-        if len(numbers) < 2:
-            return -1
+    def max_pairs_naive(self, numbers):
+        assert len(numbers) >= 2
+        assert all (0<= a <= 2 * 10**5 for a in numbers)
+        product=0
+        for i in range(len(numbers)):
+            for j in range(i +1, len(numbers)):
+                product=max(product,numbers[i] * numbers[j])
+        return product
+
+    def max_pairs(self, numbers):
+        assert len(numbers) >= 2
+        assert all (0<= a <= 2 * 10**5 for a in numbers)
+
         if len(numbers) == 2:
             return numbers[0] * numbers[1]
-        max_idx = 0
-        max_num = 0
+        max_idx1 = 0
         for idx, i in enumerate(numbers):
-            if i > max_num:
-                max_num = i
-                max_idx = idx
-        max_idx2 = 0
-        max_num2 = 0
+            if i > numbers[max_idx1]:
+                max_idx1 = idx
+        max_idx2 = 1
         for idx, i in enumerate(numbers):
-            if i > max_num2 and idx != max_idx:
-                max_num2 = i
+            if i > numbers[max_idx2] and idx != max_idx1:
                 max_idx2 = idx
 
-        return numbers[max_idx] * numbers[max_idx2]
+        return numbers[max_idx1] * numbers[max_idx2]
 
 
 if __name__ == "__main__":
-    # str_numbers=input('please enter input numbers:')
-    sys.stdin.readline()
-    str_numbers = sys.stdin.readline()
+    list_len=int(input())
+    numbers=list(map(int,input().split()))
+    assert list_len == len(numbers)
     max_pair = MaxPairs()
-    print(max_pair.calc_max_pairs([int(num) for num in str_numbers.split()]))
+    print(max_pair.calc_max_pairs(numbers))
